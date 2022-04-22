@@ -11,10 +11,8 @@ class ShepherdStub(object):
 
     Shepherd is the service by which customer servers can talk with Userwatch
     in backend integrations. While we may wrap it in libraries, customers can
-    interact with it directly too. It has some similar functionality to
-    Guardian, but is generally able to trust callers a bit more since requests
-    come with the customer's private keys rather than ones which could be
-    extracted from their publicly available, client applications.
+    interact with it directly too. The caller is authenticated via project
+    private api keys.
     """
 
     def __init__(self, channel):
@@ -65,10 +63,8 @@ class ShepherdServicer(object):
 
     Shepherd is the service by which customer servers can talk with Userwatch
     in backend integrations. While we may wrap it in libraries, customers can
-    interact with it directly too. It has some similar functionality to
-    Guardian, but is generally able to trust callers a bit more since requests
-    come with the customer's private keys rather than ones which could be
-    extracted from their publicly available, client applications.
+    interact with it directly too. The caller is authenticated via project
+    private api keys.
     """
 
     def Validate(self, request, context):
@@ -93,11 +89,6 @@ class ShepherdServicer(object):
 
     def ApproveDevice(self, request, context):
         """User Management
-        rpc ListUsers() returns () {};
-        rpc GetUser() returns () {};
-        rpc AddFlag () returns () {};
-        rpc RemoveFlag () returns () {};
-        rpc IgnoreFlag () returns () {};
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -116,13 +107,7 @@ class ShepherdServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def ValidateLastRequest(self, request, context):
-        """Device Management
-        rpc GetDevice() returns () {};
-        rpc ListReportedDevices returns () {};
-
-        rpc TestWebHook () returns () {};
-
-        Context specific API calls (eg. Firebase)
+        """Context specific API calls (eg. Firebase)
         This could be made more generic eg. Fetch matching request?
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -179,10 +164,8 @@ class Shepherd(object):
 
     Shepherd is the service by which customer servers can talk with Userwatch
     in backend integrations. While we may wrap it in libraries, customers can
-    interact with it directly too. It has some similar functionality to
-    Guardian, but is generally able to trust callers a bit more since requests
-    come with the customer's private keys rather than ones which could be
-    extracted from their publicly available, client applications.
+    interact with it directly too. The caller is authenticated via project
+    private api keys.
     """
 
     @staticmethod
