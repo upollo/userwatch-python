@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="userwatch-python",
-    version="0.0.1",
+    version="0.0.3",
     author="Userwatch",
     description="",
     long_description=long_description,
@@ -22,7 +22,7 @@ setuptools.setup(
     py_modules=["userwatch", "userwatch_public_pb2",
                 "userwatch_shepherd_pb2", "userwatch_shepherd_pb2_grpc"],
     package_dir={'': 'src/'},
-    install_requires=[],
+    install_requires=["grpcio>=1.30", "protobuf>=3.0"],
     setup_requires=['pytest-runner'],
     test_suites=['tests']
 )

@@ -18,6 +18,10 @@ def test_userwatch_local():
         testPrivateApiKey, {"url": "localhost:8080", "insecure": True})
     assert uw != None
 
+def test_userwatch_default():
+    uw = userwatch.Userwatch(testPrivateApiKey)
+    assert uw != None
+
 
 # The following tests can be uncommented and used ad-hoc to test against a real server.
 

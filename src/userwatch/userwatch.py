@@ -8,7 +8,7 @@ class Userwatch:
     shepherd = None
     privateApiKey = None
 
-    def __init__(self, privateApiKey, options):
+    def __init__(self, privateApiKey, options = {}):
         url = options.get("url", "api.userwat.ch:443")
         self.privateApiKey = privateApiKey
         channel = None
