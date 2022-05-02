@@ -6,7 +6,7 @@ The Python library runs on your server and can be paired with the web or mobile 
 
 ## Get your API Keys
 
-Sign up for our beta at [userwat.ch/beta](/beta) to get your Private API key.
+Sign up for our beta at [userwat.ch/beta](https://userwat.ch/beta) to get your Private API key.
 
 ## Getting started
 
@@ -15,13 +15,13 @@ Import the package and create a client with your api key.
 ```python
 from userwatch import userwatch
 
-privateApiKey = "ADD_PRIVATE_API_KEY_HERE";
+privateApiKey = "ADD_PRIVATE_API_KEY_HERE"
 userwatchClient = userwatch.Userwatch(privateApiKey)
 ```
 
 ## Validate a User
 
-To validate a user you need a token from the javascript library. See the [Userwatch Javascript Client Guide](/docs/web-library) for how to get the token.
+To validate a user you need a token from the javascript library. See the [Userwatch Javascript Client Guide](https://userwat.ch/docs/web-library) for how to get the token.
 
 You also need a userId and possibly their email address or phone number, whichever is available to improve detection. You can use an email address as the id if you don't have another id.
 
@@ -29,13 +29,13 @@ You also need a userId and possibly their email address or phone number, whichev
 from userwatch import userwatch
 from userwatch import userwatch_public_pb2
 
-userwatchToken = "GET FROM THE WEB CLIENT";
+userwatchToken = "GET FROM THE WEB CLIENT"
 
 userInfo = userwatch_public_pb2.UserInfo(
-    user_id="u_1234", // provide your user id if you have it.
-    user_name="foo", // provide user name if you have it.
-    user_email="foo@bar.com" // provide the email address if you have it.
-    user_phone="+6100000000", // provide the phone number if you have it
+    user_id="u_1234", # provide your user id if you have it.
+    user_name="foo", # provide user name if you have it.
+    user_email="foo@bar.com", # provide the email address if you have it.
+    user_phone="+6100000000", # provide the phone number if you have it
 )
 
 eventType = userwatch_public_pb2.EVENT_TYPE_LOGIN
@@ -46,7 +46,7 @@ validateResponse = userwatchClient.validate(
   eventType
 )
 
-flagTypes = list(map(lambda f: f.type, resp.flags))
+flagTypes = list(map(lambda f: f.type, validateResponse.flags))
 isAccountSharing = userwatch_public_pb2.FLAG_TYPE_ACCOUNT_SHARING in flagTypes
 isRepeatedTrial = userwatch_public_pb2.FLAG_TYPE_REPEATED_SIGNUP in flagTypes
 
