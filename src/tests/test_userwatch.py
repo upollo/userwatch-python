@@ -18,6 +18,7 @@ def test_userwatch_local():
         testPrivateApiKey, {"url": "localhost:8080", "insecure": True})
     assert uw != None
 
+
 def test_userwatch_default():
     uw = userwatch.Userwatch(testPrivateApiKey)
     assert uw != None
@@ -54,14 +55,13 @@ def test_userwatch_default():
 
 #     assert False
 
-# def test_validate_dev():
+# def test_verify_dev():
 #     uw = userwatch.Userwatch(
 #         testPrivateApiKey, {"url": "api.dev.user.watch:443"})
 
-#     resp = uw.validate(
+#     resp = uw.verify(
 #         "Cp0CCAIyHAgBEgsIpsv6kgYQwIz7IhoLCKbL-pIGEKiU-yIyHggYEgwI26SWkAYQ26_XugIaDAigy_qSBhDIv6SOAjoaCgtmb29AYmFyLmNvbRILZm9vQGJhci5jb21CkwEKFnp0NmNHV1dnM3RDNFRiUVREelpLaGIqeU1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwXzE1XzcpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS8xMDAuMC40ODk2Ljg4IFNhZmFyaS81MzcuMzZSJDJkNzdjYzA1LTNlOGQtNDFjZi1iZDZiLWYzMTNhNmJjZDkwMVoBAmABEkAFWWWTwC-tl4Ip1wtSqVAsJyG1TlEbAGlTe3qMVC7OXaGR-DFX9hSJVHXN7bo3Z6CC3GJE7LIOVYPJVEMf4IkjGgRy_Z5IIgsIq8v6kgYQyODmJA==",
-#         userwatch_public_pb2.UserInfo(user_email="foo@bar.com"),
-#         userwatch_public_pb2.EVENT_TYPE_LOGIN
+#         userwatch_public_pb2.UserInfo(user_email="foo@bar.com")
 #     )
 
 #     if resp.action == userwatch_public_pb2.OUTCOME_PERMIT:
@@ -72,8 +72,8 @@ def test_userwatch_default():
 #         print("Outcame deny. Deny the user.")
 
 #     flagTypes = list(map(lambda f: f.type, resp.flags))
-#     isAccountSharing = userwatch_public_pb2.FLAG_TYPE_ACCOUNT_SHARING in flagTypes
-#     isRepeatedTrial = userwatch_public_pb2.FLAG_TYPE_REPEATED_SIGNUP in flagTypes
+#     isAccountSharing = userwatch_public_pb2.ACCOUNT_SHARING in flagTypes
+#     isRepeatedTrial = userwatch_public_pb2.REPEATED_SIGNUP in flagTypes
 
 #     print("is sharing: "+str(isAccountSharing))
 #     print("is repeated trial: "+str(isRepeatedTrial))

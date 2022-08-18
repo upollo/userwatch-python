@@ -1,12 +1,12 @@
-# Userwatch Python Client
+# Upollo Python Client
 
-The Userwatch Python library can be used identify users before they login or if they visit from multiple devices.
+The [Upollo](https://upollo.ai) Python library can be used identify users before they login or if they visit from multiple devices.
 
 The Python library runs on your server and can be paired with the web or mobile to protect logins or payments.
 
 ## Get your API Keys
 
-Sign up for our beta at [userwat.ch/beta](https://userwat.ch/beta) to get your Private API key.
+Sign up for our beta at [upollo.ai/beta](https://upollo.ai/beta) to get your Private API key.
 
 ## Getting started
 
@@ -21,7 +21,7 @@ userwatchClient = userwatch.Userwatch(privateApiKey)
 
 ## Validate a User
 
-To validate a user you need a token from the javascript library. See the [Userwatch Javascript Client Guide](https://userwat.ch/docs/web-library) for how to get the token.
+To validate a user you need a token from the javascript library. See the [Upollo Javascript Client Guide](https://upollo.ai/docs/web-library) for how to get the token.
 
 You also need a userId and possibly their email address or phone number, whichever is available to improve detection. You can use an email address as the id if you don't have another id.
 
@@ -40,15 +40,14 @@ userInfo = userwatch_public_pb2.UserInfo(
 
 eventType = userwatch_public_pb2.EVENT_TYPE_LOGIN
 
-validateResponse = userwatchClient.validate(
+analysis = userwatchClient.verify(
   userwatchToken,
-  userInfo,
-  eventType
+  userInfo
 )
 
-flagTypes = list(map(lambda f: f.type, validateResponse.flags))
-isAccountSharing = userwatch_public_pb2.FLAG_TYPE_ACCOUNT_SHARING in flagTypes
-isRepeatedTrial = userwatch_public_pb2.FLAG_TYPE_REPEATED_SIGNUP in flagTypes
+flagTypes = list(map(lambda f: f.type, analysis.flags))
+isAccountSharing = userwatch_public_pb2.ACCOUNT_SHARING in flagTypes
+isRepeatedTrial = userwatch_public_pb2.REPEATED_SIGNUP in flagTypes
 
 if isAccountSharing:
     print("user is account sharing")

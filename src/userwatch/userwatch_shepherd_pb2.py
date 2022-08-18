@@ -15,9 +15,10 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 from userwatch import userwatch_public_pb2 as userwatch_dot_userwatch__public__pb2
+from userwatch import userwatch_shadow_pb2 as userwatch_dot_userwatch__shadow__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"userwatch/userwatch_shepherd.proto\x12\x06uwGrpc\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a userwatch/userwatch_public.proto\"u\n\x0eWebHookRequest\x12+\n\x08\x61nalysis\x18\x01 \x01(\x0b\x32\x19.uwproto.AnalysisResponse\x12\x12\n\nproject_id\x18\x02 \x01(\t\x12\x0c\n\x04urls\x18\x03 \x03(\t\x12\x14\n\x0cweb_hook_key\x18\x04 \x01(\t\"m\n\x0fWebHookResponse\x12+\n\x08\x61nalysis\x18\x01 \x01(\x0b\x32\x19.uwproto.AnalysisResponse\x12-\n\ttimestamp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"C\n\rDeviceRequest\x12\x11\n\tdevice_id\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\t\x12\x0e\n\x06global\x18\x03 \x01(\x08\"!\n\x0e\x44\x65viceResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"$\n\x11\x44\x65viceListRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\":\n\x12\x44\x65viceListResponse\x12$\n\x07\x64\x65vices\x18\x01 \x03(\x0b\x32\x13.uwproto.DeviceInfo\"o\n\x0bSignedToken\x12\x0f\n\x07payload\x18\x01 \x01(\x0c\x12\x11\n\tsignature\x18\x02 \x01(\x0c\x12\r\n\x05nonce\x18\x03 \x01(\x0c\x12-\n\ttimestamp\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\xfd\x01\n\x11ValidationRequest\x12\x18\n\x10validation_token\x18\x01 \x01(\t\x12#\n\x08userinfo\x18\x02 \x01(\x0b\x32\x11.uwproto.UserInfo\x12\x44\n\x16\x63hallenge_verification\x18\x04 \x01(\x0b\x32$.uwGrpc.ChallengeVerificationRequest\x12&\n\nevent_type\x18\x05 \x01(\x0e\x32\x12.uwproto.EventType\x12#\n\x1b\x63ustomer_defined_event_type\x18\x06 \x01(\t\x12\x16\n\x0esub_event_type\x18\x08 \x01(\t\"\xe7\x01\n\x1c\x43hallengeVerificationRequest\x12\x14\n\x0c\x63hallenge_id\x18\x01 \x01(\t\x12\x17\n\x0fsecret_response\x18\x02 \x01(\t\x12$\n\x1cwebauthn_credential_response\x18\x03 \x01(\x0c\x12#\n\x08userinfo\x18\x06 \x01(\x0b\x32\x11.uwproto.UserInfo\x12\x11\n\tdevice_id\x18\x07 \x01(\t\x12$\n\x04type\x18\x05 \x01(\x0e\x32\x16.uwproto.ChallengeType\x12\x14\n\x0creport_token\x18\x08 \x01(\t\"\xca\x01\n\x1d\x43hallengeVerificationResponse\x12\x44\n challenge_completed_successfully\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12&\n\nevent_type\x18\x03 \x01(\x0e\x32\x12.uwproto.EventType\x12#\n\x1b\x63ustomer_defined_event_type\x18\x04 \x01(\t\x12\x16\n\x0esub_event_type\x18\x05 \x01(\t\"\xeb\x01\n\x16\x43reateChallengeRequest\x12$\n\x04type\x18\x01 \x01(\x0e\x32\x16.uwproto.ChallengeType\x12#\n\x08userinfo\x18\x02 \x01(\x0b\x32\x11.uwproto.UserInfo\x12\x11\n\tdevice_id\x18\x04 \x01(\t\x12\x0e\n\x06origin\x18\x05 \x01(\t\x12&\n\nevent_type\x18\x06 \x01(\x0e\x32\x12.uwproto.EventType\x12#\n\x1b\x63ustomer_defined_event_type\x18\x07 \x01(\t\x12\x16\n\x0esub_event_type\x18\x08 \x01(\t\"\x9f\x01\n\x17\x43reateChallengeResponse\x12\x14\n\x0c\x63hallenge_id\x18\x01 \x01(\t\x12*\n\x06\x65xpiry\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1c\n\x14webauthn_credentials\x18\x03 \x01(\x0c\x12$\n\x04type\x18\x04 \x01(\x0e\x32\x16.uwproto.ChallengeType\"\x84\x02\n\x1aValidateLastRequestRequest\x12\x10\n\x08\x65vent_id\x18\x01 \x01(\t\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x12\n\nuser_agent\x18\x03 \x01(\t\x12-\n\ttimestamp\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05\x65mail\x18\x05 \x01(\t\x12\x16\n\x0e\x65mail_verified\x18\x06 \x01(\x08\x12\x14\n\x0cphone_number\x18\x07 \x01(\t\x12\x0b\n\x03uid\x18\x08 \x01(\t\x12\x13\n\x0bprovider_id\x18\t \x01(\t\x12&\n\nevent_type\x18\n \x01(\x0e\x32\x12.uwproto.EventType\"\x8e\x01\n\x1bValidateLastRequestResponse\x12!\n\x07outcome\x18\x01 \x01(\x0e\x32\x10.uwproto.Outcome\x12\x1d\n\x05\x66lags\x18\x02 \x01(\x0b\x32\x0e.uwproto.Flags\x12-\n\ttimestamp\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp2\xb5\x04\n\x08Shepherd\x12\x42\n\x08Validate\x12\x19.uwGrpc.ValidationRequest\x1a\x19.uwproto.AnalysisResponse\"\x00\x12T\n\x0f\x43reateChallenge\x12\x1e.uwGrpc.CreateChallengeRequest\x1a\x1f.uwGrpc.CreateChallengeResponse\"\x00\x12`\n\x0fVerifyChallenge\x12$.uwGrpc.ChallengeVerificationRequest\x1a%.uwGrpc.ChallengeVerificationResponse\"\x00\x12@\n\rApproveDevice\x12\x15.uwGrpc.DeviceRequest\x1a\x16.uwGrpc.DeviceResponse\"\x00\x12?\n\x0cReportDevice\x12\x15.uwGrpc.DeviceRequest\x1a\x16.uwGrpc.DeviceResponse\"\x00\x12H\n\rGetDeviceList\x12\x19.uwGrpc.DeviceListRequest\x1a\x1a.uwGrpc.DeviceListResponse\"\x00\x12`\n\x13ValidateLastRequest\x12\".uwGrpc.ValidateLastRequestRequest\x1a#.uwGrpc.ValidateLastRequestResponse\"\x00\x42\x39Z.github.com/userwatch/uw1/protos/uwgrpcshepherd\xa2\x02\x06UwGrpcb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"userwatch/userwatch_shepherd.proto\x12\x07uwproto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a userwatch/userwatch_public.proto\x1a userwatch/userwatch_shadow.proto\"u\n\x0eWebHookRequest\x12+\n\x08\x61nalysis\x18\x01 \x01(\x0b\x32\x19.uwproto.AnalysisResponse\x12\x12\n\nproject_id\x18\x02 \x01(\t\x12\x0c\n\x04urls\x18\x03 \x03(\t\x12\x14\n\x0cweb_hook_key\x18\x04 \x01(\t\"m\n\x0fWebHookResponse\x12+\n\x08\x61nalysis\x18\x01 \x01(\x0b\x32\x19.uwproto.AnalysisResponse\x12-\n\ttimestamp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"C\n\rDeviceRequest\x12\x11\n\tdevice_id\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\t\x12\x0e\n\x06global\x18\x03 \x01(\x08\"!\n\x0e\x44\x65viceResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"$\n\x11\x44\x65viceListRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\":\n\x12\x44\x65viceListResponse\x12$\n\x07\x64\x65vices\x18\x01 \x03(\x0b\x32\x13.uwproto.DeviceInfo\"o\n\x0bSignedToken\x12\x0f\n\x07payload\x18\x01 \x01(\x0c\x12\x11\n\tsignature\x18\x02 \x01(\x0c\x12\r\n\x05nonce\x18\x03 \x01(\x0c\x12-\n\ttimestamp\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"\x81\x02\n\rVerifyRequest\x12\x13\n\x0b\x65vent_token\x18\x01 \x01(\t\x12#\n\x08userinfo\x18\x02 \x01(\x0b\x32\x11.uwproto.UserInfo\x12\x45\n\x16\x63hallenge_verification\x18\x04 \x01(\x0b\x32%.uwproto.ChallengeVerificationRequest\x12*\n\nevent_type\x18\x05 \x01(\x0e\x32\x12.uwproto.EventTypeB\x02\x18\x01\x12\'\n\x1b\x63ustomer_defined_event_type\x18\x06 \x01(\tB\x02\x18\x01\x12\x1a\n\x0esub_event_type\x18\x08 \x01(\tB\x02\x18\x01\"\xe7\x01\n\x1c\x43hallengeVerificationRequest\x12\x14\n\x0c\x63hallenge_id\x18\x01 \x01(\t\x12\x17\n\x0fsecret_response\x18\x02 \x01(\t\x12$\n\x1cwebauthn_credential_response\x18\x03 \x01(\x0c\x12#\n\x08userinfo\x18\x06 \x01(\x0b\x32\x11.uwproto.UserInfo\x12\x11\n\tdevice_id\x18\x07 \x01(\t\x12$\n\x04type\x18\x05 \x01(\x0e\x32\x16.uwproto.ChallengeType\x12\x14\n\x0creport_token\x18\x08 \x01(\t\"\xca\x01\n\x1d\x43hallengeVerificationResponse\x12\x44\n challenge_completed_successfully\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12&\n\nevent_type\x18\x03 \x01(\x0e\x32\x12.uwproto.EventType\x12#\n\x1b\x63ustomer_defined_event_type\x18\x04 \x01(\t\x12\x16\n\x0esub_event_type\x18\x05 \x01(\t\"\xeb\x01\n\x16\x43reateChallengeRequest\x12$\n\x04type\x18\x01 \x01(\x0e\x32\x16.uwproto.ChallengeType\x12#\n\x08userinfo\x18\x02 \x01(\x0b\x32\x11.uwproto.UserInfo\x12\x11\n\tdevice_id\x18\x04 \x01(\t\x12\x0e\n\x06origin\x18\x05 \x01(\t\x12&\n\nevent_type\x18\x06 \x01(\x0e\x32\x12.uwproto.EventType\x12#\n\x1b\x63ustomer_defined_event_type\x18\x07 \x01(\t\x12\x16\n\x0esub_event_type\x18\x08 \x01(\t\"\x9f\x01\n\x17\x43reateChallengeResponse\x12\x14\n\x0c\x63hallenge_id\x18\x01 \x01(\t\x12*\n\x06\x65xpiry\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1c\n\x14webauthn_credentials\x18\x03 \x01(\x0c\x12$\n\x04type\x18\x04 \x01(\x0e\x32\x16.uwproto.ChallengeType\"y\n\x11TrackEventRequest\x12#\n\x08userinfo\x18\x01 \x01(\x0b\x32\x11.uwproto.UserInfo\x12\x1d\n\x05\x65vent\x18\x02 \x01(\x0b\x32\x0e.uwproto.Event\x12 \n\x07library\x18\x03 \x01(\x0b\x32\x0f.uwGrpc.Library2\x8c\x04\n\x08Shepherd\x12>\n\x05Track\x12\x1a.uwproto.TrackEventRequest\x1a\x19.uwproto.AnalysisResponse\x12;\n\x06Verify\x12\x16.uwproto.VerifyRequest\x1a\x19.uwproto.AnalysisResponse\x12T\n\x0f\x43reateChallenge\x12\x1f.uwproto.CreateChallengeRequest\x1a .uwproto.CreateChallengeResponse\x12`\n\x0fVerifyChallenge\x12%.uwproto.ChallengeVerificationRequest\x1a&.uwproto.ChallengeVerificationResponse\x12@\n\rApproveDevice\x12\x16.uwproto.DeviceRequest\x1a\x17.uwproto.DeviceResponse\x12?\n\x0cReportDevice\x12\x16.uwproto.DeviceRequest\x1a\x17.uwproto.DeviceResponse\x12H\n\rGetDeviceList\x12\x1a.uwproto.DeviceListRequest\x1a\x1b.uwproto.DeviceListResponseBQ\n\x12\x63o.userwatch.protoP\x01Z/github.com/userwatch/uw1/protos/uwprotoshepherd\xa2\x02\x07UwProtob\x06proto3')
 
 
 
@@ -28,144 +29,140 @@ _DEVICERESPONSE = DESCRIPTOR.message_types_by_name['DeviceResponse']
 _DEVICELISTREQUEST = DESCRIPTOR.message_types_by_name['DeviceListRequest']
 _DEVICELISTRESPONSE = DESCRIPTOR.message_types_by_name['DeviceListResponse']
 _SIGNEDTOKEN = DESCRIPTOR.message_types_by_name['SignedToken']
-_VALIDATIONREQUEST = DESCRIPTOR.message_types_by_name['ValidationRequest']
+_VERIFYREQUEST = DESCRIPTOR.message_types_by_name['VerifyRequest']
 _CHALLENGEVERIFICATIONREQUEST = DESCRIPTOR.message_types_by_name['ChallengeVerificationRequest']
 _CHALLENGEVERIFICATIONRESPONSE = DESCRIPTOR.message_types_by_name['ChallengeVerificationResponse']
 _CREATECHALLENGEREQUEST = DESCRIPTOR.message_types_by_name['CreateChallengeRequest']
 _CREATECHALLENGERESPONSE = DESCRIPTOR.message_types_by_name['CreateChallengeResponse']
-_VALIDATELASTREQUESTREQUEST = DESCRIPTOR.message_types_by_name['ValidateLastRequestRequest']
-_VALIDATELASTREQUESTRESPONSE = DESCRIPTOR.message_types_by_name['ValidateLastRequestResponse']
+_TRACKEVENTREQUEST = DESCRIPTOR.message_types_by_name['TrackEventRequest']
 WebHookRequest = _reflection.GeneratedProtocolMessageType('WebHookRequest', (_message.Message,), {
   'DESCRIPTOR' : _WEBHOOKREQUEST,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.WebHookRequest)
+  # @@protoc_insertion_point(class_scope:uwproto.WebHookRequest)
   })
 _sym_db.RegisterMessage(WebHookRequest)
 
 WebHookResponse = _reflection.GeneratedProtocolMessageType('WebHookResponse', (_message.Message,), {
   'DESCRIPTOR' : _WEBHOOKRESPONSE,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.WebHookResponse)
+  # @@protoc_insertion_point(class_scope:uwproto.WebHookResponse)
   })
 _sym_db.RegisterMessage(WebHookResponse)
 
 DeviceRequest = _reflection.GeneratedProtocolMessageType('DeviceRequest', (_message.Message,), {
   'DESCRIPTOR' : _DEVICEREQUEST,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.DeviceRequest)
+  # @@protoc_insertion_point(class_scope:uwproto.DeviceRequest)
   })
 _sym_db.RegisterMessage(DeviceRequest)
 
 DeviceResponse = _reflection.GeneratedProtocolMessageType('DeviceResponse', (_message.Message,), {
   'DESCRIPTOR' : _DEVICERESPONSE,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.DeviceResponse)
+  # @@protoc_insertion_point(class_scope:uwproto.DeviceResponse)
   })
 _sym_db.RegisterMessage(DeviceResponse)
 
 DeviceListRequest = _reflection.GeneratedProtocolMessageType('DeviceListRequest', (_message.Message,), {
   'DESCRIPTOR' : _DEVICELISTREQUEST,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.DeviceListRequest)
+  # @@protoc_insertion_point(class_scope:uwproto.DeviceListRequest)
   })
 _sym_db.RegisterMessage(DeviceListRequest)
 
 DeviceListResponse = _reflection.GeneratedProtocolMessageType('DeviceListResponse', (_message.Message,), {
   'DESCRIPTOR' : _DEVICELISTRESPONSE,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.DeviceListResponse)
+  # @@protoc_insertion_point(class_scope:uwproto.DeviceListResponse)
   })
 _sym_db.RegisterMessage(DeviceListResponse)
 
 SignedToken = _reflection.GeneratedProtocolMessageType('SignedToken', (_message.Message,), {
   'DESCRIPTOR' : _SIGNEDTOKEN,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.SignedToken)
+  # @@protoc_insertion_point(class_scope:uwproto.SignedToken)
   })
 _sym_db.RegisterMessage(SignedToken)
 
-ValidationRequest = _reflection.GeneratedProtocolMessageType('ValidationRequest', (_message.Message,), {
-  'DESCRIPTOR' : _VALIDATIONREQUEST,
+VerifyRequest = _reflection.GeneratedProtocolMessageType('VerifyRequest', (_message.Message,), {
+  'DESCRIPTOR' : _VERIFYREQUEST,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.ValidationRequest)
+  # @@protoc_insertion_point(class_scope:uwproto.VerifyRequest)
   })
-_sym_db.RegisterMessage(ValidationRequest)
+_sym_db.RegisterMessage(VerifyRequest)
 
 ChallengeVerificationRequest = _reflection.GeneratedProtocolMessageType('ChallengeVerificationRequest', (_message.Message,), {
   'DESCRIPTOR' : _CHALLENGEVERIFICATIONREQUEST,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.ChallengeVerificationRequest)
+  # @@protoc_insertion_point(class_scope:uwproto.ChallengeVerificationRequest)
   })
 _sym_db.RegisterMessage(ChallengeVerificationRequest)
 
 ChallengeVerificationResponse = _reflection.GeneratedProtocolMessageType('ChallengeVerificationResponse', (_message.Message,), {
   'DESCRIPTOR' : _CHALLENGEVERIFICATIONRESPONSE,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.ChallengeVerificationResponse)
+  # @@protoc_insertion_point(class_scope:uwproto.ChallengeVerificationResponse)
   })
 _sym_db.RegisterMessage(ChallengeVerificationResponse)
 
 CreateChallengeRequest = _reflection.GeneratedProtocolMessageType('CreateChallengeRequest', (_message.Message,), {
   'DESCRIPTOR' : _CREATECHALLENGEREQUEST,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.CreateChallengeRequest)
+  # @@protoc_insertion_point(class_scope:uwproto.CreateChallengeRequest)
   })
 _sym_db.RegisterMessage(CreateChallengeRequest)
 
 CreateChallengeResponse = _reflection.GeneratedProtocolMessageType('CreateChallengeResponse', (_message.Message,), {
   'DESCRIPTOR' : _CREATECHALLENGERESPONSE,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.CreateChallengeResponse)
+  # @@protoc_insertion_point(class_scope:uwproto.CreateChallengeResponse)
   })
 _sym_db.RegisterMessage(CreateChallengeResponse)
 
-ValidateLastRequestRequest = _reflection.GeneratedProtocolMessageType('ValidateLastRequestRequest', (_message.Message,), {
-  'DESCRIPTOR' : _VALIDATELASTREQUESTREQUEST,
+TrackEventRequest = _reflection.GeneratedProtocolMessageType('TrackEventRequest', (_message.Message,), {
+  'DESCRIPTOR' : _TRACKEVENTREQUEST,
   '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.ValidateLastRequestRequest)
+  # @@protoc_insertion_point(class_scope:uwproto.TrackEventRequest)
   })
-_sym_db.RegisterMessage(ValidateLastRequestRequest)
-
-ValidateLastRequestResponse = _reflection.GeneratedProtocolMessageType('ValidateLastRequestResponse', (_message.Message,), {
-  'DESCRIPTOR' : _VALIDATELASTREQUESTRESPONSE,
-  '__module__' : 'userwatch.userwatch_shepherd_pb2'
-  # @@protoc_insertion_point(class_scope:uwGrpc.ValidateLastRequestResponse)
-  })
-_sym_db.RegisterMessage(ValidateLastRequestResponse)
+_sym_db.RegisterMessage(TrackEventRequest)
 
 _SHEPHERD = DESCRIPTOR.services_by_name['Shepherd']
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  DESCRIPTOR._serialized_options = b'Z.github.com/userwatch/uw1/protos/uwgrpcshepherd\242\002\006UwGrpc'
-  _WEBHOOKREQUEST._serialized_start=145
-  _WEBHOOKREQUEST._serialized_end=262
-  _WEBHOOKRESPONSE._serialized_start=264
-  _WEBHOOKRESPONSE._serialized_end=373
-  _DEVICEREQUEST._serialized_start=375
-  _DEVICEREQUEST._serialized_end=442
-  _DEVICERESPONSE._serialized_start=444
-  _DEVICERESPONSE._serialized_end=477
-  _DEVICELISTREQUEST._serialized_start=479
-  _DEVICELISTREQUEST._serialized_end=515
-  _DEVICELISTRESPONSE._serialized_start=517
-  _DEVICELISTRESPONSE._serialized_end=575
-  _SIGNEDTOKEN._serialized_start=577
-  _SIGNEDTOKEN._serialized_end=688
-  _VALIDATIONREQUEST._serialized_start=691
-  _VALIDATIONREQUEST._serialized_end=944
-  _CHALLENGEVERIFICATIONREQUEST._serialized_start=947
-  _CHALLENGEVERIFICATIONREQUEST._serialized_end=1178
-  _CHALLENGEVERIFICATIONRESPONSE._serialized_start=1181
-  _CHALLENGEVERIFICATIONRESPONSE._serialized_end=1383
-  _CREATECHALLENGEREQUEST._serialized_start=1386
-  _CREATECHALLENGEREQUEST._serialized_end=1621
-  _CREATECHALLENGERESPONSE._serialized_start=1624
-  _CREATECHALLENGERESPONSE._serialized_end=1783
-  _VALIDATELASTREQUESTREQUEST._serialized_start=1786
-  _VALIDATELASTREQUESTREQUEST._serialized_end=2046
-  _VALIDATELASTREQUESTRESPONSE._serialized_start=2049
-  _VALIDATELASTREQUESTRESPONSE._serialized_end=2191
-  _SHEPHERD._serialized_start=2194
-  _SHEPHERD._serialized_end=2759
+  DESCRIPTOR._serialized_options = b'\n\022co.userwatch.protoP\001Z/github.com/userwatch/uw1/protos/uwprotoshepherd\242\002\007UwProto'
+  _VERIFYREQUEST.fields_by_name['event_type']._options = None
+  _VERIFYREQUEST.fields_by_name['event_type']._serialized_options = b'\030\001'
+  _VERIFYREQUEST.fields_by_name['customer_defined_event_type']._options = None
+  _VERIFYREQUEST.fields_by_name['customer_defined_event_type']._serialized_options = b'\030\001'
+  _VERIFYREQUEST.fields_by_name['sub_event_type']._options = None
+  _VERIFYREQUEST.fields_by_name['sub_event_type']._serialized_options = b'\030\001'
+  _WEBHOOKREQUEST._serialized_start=180
+  _WEBHOOKREQUEST._serialized_end=297
+  _WEBHOOKRESPONSE._serialized_start=299
+  _WEBHOOKRESPONSE._serialized_end=408
+  _DEVICEREQUEST._serialized_start=410
+  _DEVICEREQUEST._serialized_end=477
+  _DEVICERESPONSE._serialized_start=479
+  _DEVICERESPONSE._serialized_end=512
+  _DEVICELISTREQUEST._serialized_start=514
+  _DEVICELISTREQUEST._serialized_end=550
+  _DEVICELISTRESPONSE._serialized_start=552
+  _DEVICELISTRESPONSE._serialized_end=610
+  _SIGNEDTOKEN._serialized_start=612
+  _SIGNEDTOKEN._serialized_end=723
+  _VERIFYREQUEST._serialized_start=726
+  _VERIFYREQUEST._serialized_end=983
+  _CHALLENGEVERIFICATIONREQUEST._serialized_start=986
+  _CHALLENGEVERIFICATIONREQUEST._serialized_end=1217
+  _CHALLENGEVERIFICATIONRESPONSE._serialized_start=1220
+  _CHALLENGEVERIFICATIONRESPONSE._serialized_end=1422
+  _CREATECHALLENGEREQUEST._serialized_start=1425
+  _CREATECHALLENGEREQUEST._serialized_end=1660
+  _CREATECHALLENGERESPONSE._serialized_start=1663
+  _CREATECHALLENGERESPONSE._serialized_end=1822
+  _TRACKEVENTREQUEST._serialized_start=1824
+  _TRACKEVENTREQUEST._serialized_end=1945
+  _SHEPHERD._serialized_start=1948
+  _SHEPHERD._serialized_end=2472
 # @@protoc_insertion_point(module_scope)

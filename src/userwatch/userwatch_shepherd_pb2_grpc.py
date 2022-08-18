@@ -21,40 +21,40 @@ class ShepherdStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.Validate = channel.unary_unary(
-                '/uwGrpc.Shepherd/Validate',
-                request_serializer=userwatch_dot_userwatch__shepherd__pb2.ValidationRequest.SerializeToString,
+        self.Track = channel.unary_unary(
+                '/uwproto.Shepherd/Track',
+                request_serializer=userwatch_dot_userwatch__shepherd__pb2.TrackEventRequest.SerializeToString,
+                response_deserializer=userwatch_dot_userwatch__public__pb2.AnalysisResponse.FromString,
+                )
+        self.Verify = channel.unary_unary(
+                '/uwproto.Shepherd/Verify',
+                request_serializer=userwatch_dot_userwatch__shepherd__pb2.VerifyRequest.SerializeToString,
                 response_deserializer=userwatch_dot_userwatch__public__pb2.AnalysisResponse.FromString,
                 )
         self.CreateChallenge = channel.unary_unary(
-                '/uwGrpc.Shepherd/CreateChallenge',
+                '/uwproto.Shepherd/CreateChallenge',
                 request_serializer=userwatch_dot_userwatch__shepherd__pb2.CreateChallengeRequest.SerializeToString,
                 response_deserializer=userwatch_dot_userwatch__shepherd__pb2.CreateChallengeResponse.FromString,
                 )
         self.VerifyChallenge = channel.unary_unary(
-                '/uwGrpc.Shepherd/VerifyChallenge',
+                '/uwproto.Shepherd/VerifyChallenge',
                 request_serializer=userwatch_dot_userwatch__shepherd__pb2.ChallengeVerificationRequest.SerializeToString,
                 response_deserializer=userwatch_dot_userwatch__shepherd__pb2.ChallengeVerificationResponse.FromString,
                 )
         self.ApproveDevice = channel.unary_unary(
-                '/uwGrpc.Shepherd/ApproveDevice',
+                '/uwproto.Shepherd/ApproveDevice',
                 request_serializer=userwatch_dot_userwatch__shepherd__pb2.DeviceRequest.SerializeToString,
                 response_deserializer=userwatch_dot_userwatch__shepherd__pb2.DeviceResponse.FromString,
                 )
         self.ReportDevice = channel.unary_unary(
-                '/uwGrpc.Shepherd/ReportDevice',
+                '/uwproto.Shepherd/ReportDevice',
                 request_serializer=userwatch_dot_userwatch__shepherd__pb2.DeviceRequest.SerializeToString,
                 response_deserializer=userwatch_dot_userwatch__shepherd__pb2.DeviceResponse.FromString,
                 )
         self.GetDeviceList = channel.unary_unary(
-                '/uwGrpc.Shepherd/GetDeviceList',
+                '/uwproto.Shepherd/GetDeviceList',
                 request_serializer=userwatch_dot_userwatch__shepherd__pb2.DeviceListRequest.SerializeToString,
                 response_deserializer=userwatch_dot_userwatch__shepherd__pb2.DeviceListResponse.FromString,
-                )
-        self.ValidateLastRequest = channel.unary_unary(
-                '/uwGrpc.Shepherd/ValidateLastRequest',
-                request_serializer=userwatch_dot_userwatch__shepherd__pb2.ValidateLastRequestRequest.SerializeToString,
-                response_deserializer=userwatch_dot_userwatch__shepherd__pb2.ValidateLastRequestResponse.FromString,
                 )
 
 
@@ -67,8 +67,22 @@ class ShepherdServicer(object):
     private api keys.
     """
 
-    def Validate(self, request, context):
-        """Requests and Validation
+    def Track(self, request, context):
+        """Inform Userwatch of an event in your application.
+
+        Include any UserInfo you have, or an empty UserInfo if you have none.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Verify(self, request, context):
+        """Access the assessment of a user for whom an event was previously
+        registered with Userwatch via a track(UserInfo, EventType) call from
+        your client application.
+
+        At this point you can also attach any additional UserInfo your server
+        has which your client might not have had available.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -106,20 +120,17 @@ class ShepherdServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def ValidateLastRequest(self, request, context):
-        """Context specific API calls (eg. Firebase)
-        This could be made more generic eg. Fetch matching request?
-        """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
 
 def add_ShepherdServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Validate': grpc.unary_unary_rpc_method_handler(
-                    servicer.Validate,
-                    request_deserializer=userwatch_dot_userwatch__shepherd__pb2.ValidationRequest.FromString,
+            'Track': grpc.unary_unary_rpc_method_handler(
+                    servicer.Track,
+                    request_deserializer=userwatch_dot_userwatch__shepherd__pb2.TrackEventRequest.FromString,
+                    response_serializer=userwatch_dot_userwatch__public__pb2.AnalysisResponse.SerializeToString,
+            ),
+            'Verify': grpc.unary_unary_rpc_method_handler(
+                    servicer.Verify,
+                    request_deserializer=userwatch_dot_userwatch__shepherd__pb2.VerifyRequest.FromString,
                     response_serializer=userwatch_dot_userwatch__public__pb2.AnalysisResponse.SerializeToString,
             ),
             'CreateChallenge': grpc.unary_unary_rpc_method_handler(
@@ -147,14 +158,9 @@ def add_ShepherdServicer_to_server(servicer, server):
                     request_deserializer=userwatch_dot_userwatch__shepherd__pb2.DeviceListRequest.FromString,
                     response_serializer=userwatch_dot_userwatch__shepherd__pb2.DeviceListResponse.SerializeToString,
             ),
-            'ValidateLastRequest': grpc.unary_unary_rpc_method_handler(
-                    servicer.ValidateLastRequest,
-                    request_deserializer=userwatch_dot_userwatch__shepherd__pb2.ValidateLastRequestRequest.FromString,
-                    response_serializer=userwatch_dot_userwatch__shepherd__pb2.ValidateLastRequestResponse.SerializeToString,
-            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'uwGrpc.Shepherd', rpc_method_handlers)
+            'uwproto.Shepherd', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -169,7 +175,7 @@ class Shepherd(object):
     """
 
     @staticmethod
-    def Validate(request,
+    def Track(request,
             target,
             options=(),
             channel_credentials=None,
@@ -179,8 +185,25 @@ class Shepherd(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/uwGrpc.Shepherd/Validate',
-            userwatch_dot_userwatch__shepherd__pb2.ValidationRequest.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/uwproto.Shepherd/Track',
+            userwatch_dot_userwatch__shepherd__pb2.TrackEventRequest.SerializeToString,
+            userwatch_dot_userwatch__public__pb2.AnalysisResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Verify(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/uwproto.Shepherd/Verify',
+            userwatch_dot_userwatch__shepherd__pb2.VerifyRequest.SerializeToString,
             userwatch_dot_userwatch__public__pb2.AnalysisResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -196,7 +219,7 @@ class Shepherd(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/uwGrpc.Shepherd/CreateChallenge',
+        return grpc.experimental.unary_unary(request, target, '/uwproto.Shepherd/CreateChallenge',
             userwatch_dot_userwatch__shepherd__pb2.CreateChallengeRequest.SerializeToString,
             userwatch_dot_userwatch__shepherd__pb2.CreateChallengeResponse.FromString,
             options, channel_credentials,
@@ -213,7 +236,7 @@ class Shepherd(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/uwGrpc.Shepherd/VerifyChallenge',
+        return grpc.experimental.unary_unary(request, target, '/uwproto.Shepherd/VerifyChallenge',
             userwatch_dot_userwatch__shepherd__pb2.ChallengeVerificationRequest.SerializeToString,
             userwatch_dot_userwatch__shepherd__pb2.ChallengeVerificationResponse.FromString,
             options, channel_credentials,
@@ -230,7 +253,7 @@ class Shepherd(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/uwGrpc.Shepherd/ApproveDevice',
+        return grpc.experimental.unary_unary(request, target, '/uwproto.Shepherd/ApproveDevice',
             userwatch_dot_userwatch__shepherd__pb2.DeviceRequest.SerializeToString,
             userwatch_dot_userwatch__shepherd__pb2.DeviceResponse.FromString,
             options, channel_credentials,
@@ -247,7 +270,7 @@ class Shepherd(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/uwGrpc.Shepherd/ReportDevice',
+        return grpc.experimental.unary_unary(request, target, '/uwproto.Shepherd/ReportDevice',
             userwatch_dot_userwatch__shepherd__pb2.DeviceRequest.SerializeToString,
             userwatch_dot_userwatch__shepherd__pb2.DeviceResponse.FromString,
             options, channel_credentials,
@@ -264,25 +287,8 @@ class Shepherd(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/uwGrpc.Shepherd/GetDeviceList',
+        return grpc.experimental.unary_unary(request, target, '/uwproto.Shepherd/GetDeviceList',
             userwatch_dot_userwatch__shepherd__pb2.DeviceListRequest.SerializeToString,
             userwatch_dot_userwatch__shepherd__pb2.DeviceListResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def ValidateLastRequest(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/uwGrpc.Shepherd/ValidateLastRequest',
-            userwatch_dot_userwatch__shepherd__pb2.ValidateLastRequestRequest.SerializeToString,
-            userwatch_dot_userwatch__shepherd__pb2.ValidateLastRequestResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
