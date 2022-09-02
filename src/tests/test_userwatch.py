@@ -24,6 +24,31 @@ def test_userwatch_default():
     assert uw != None
 
 
+def test_parsing_analysis():
+    # This test demonstrates parsing flags like how a customer does.
+
+    analysis = userwatch_public_pb2.AnalysisResponse(
+        flags=[
+            userwatch_public_pb2.Flag(
+                type=userwatch_public_pb2.MULTIPLE_ACCOUNTS),
+            userwatch_public_pb2.Flag(
+                type=userwatch_public_pb2.ACCOUNT_SHARING),
+            userwatch_public_pb2.Flag(
+                type=userwatch_public_pb2.ACCOUNT_COMPROMISE_NEW_LOCATION)
+        ]
+    )
+    flags = set(map(lambda f: f.type, analysis.flags))
+    is_repeated_trial = len(
+        flags.intersection(
+            {
+                userwatch_public_pb2.MULTIPLE_ACCOUNTS,
+                userwatch_public_pb2.ACCOUNT_SHARING,
+            }
+        )
+    ) > 0
+
+    assert is_repeated_trial
+
 # The following tests can be uncommented and used ad-hoc to test against a real server.
 
 # def test_get_devices_local():
