@@ -1,11 +1,17 @@
 import grpc
+import json
+from datetime import datetime
+import traceback
 
 from userwatch import userwatch_shepherd_pb2
 from userwatch import userwatch_shepherd_pb2_grpc
+from userwatch import userwatch_historian_pb2
+from userwatch import userwatch_historian_pb2_grpc
 
 
 class Userwatch:
     shepherd = None
+    historian = None
     privateApiKey = None
 
     def __init__(self, privateApiKey, options={}):
@@ -20,6 +26,7 @@ class Userwatch:
                 grpc.ssl_channel_credentials()
             )
         self.shepherd = userwatch_shepherd_pb2_grpc.ShepherdStub(channel)
+        self.historian = userwatch_historian_pb2_grpc.HistorianStub(channel)
 
     # Access the assessment of a user for whom an event was previously
     # registered with Userwatch via a track(UserInfo, EventType) call from
@@ -41,7 +48,7 @@ class Userwatch:
                 metadata=[("x-api-key", self.privateApiKey)]
             )
 
-        return self.__retryNonIllegalArg(doit)
+        return self.__retryNonIllegalArg(doit, "verify")
 
     def createChallenge(self,
                         type,  # userwatch_public_pb2.ChallengeType
@@ -60,7 +67,7 @@ class Userwatch:
                 metadata=[("x-api-key", self.privateApiKey)]
             )
 
-        return self.__retryNonIllegalArg(doit)
+        return self.__retryNonIllegalArg(doit, "createChallenge")
 
     def verifyChallenge(
         self,
@@ -82,7 +89,7 @@ class Userwatch:
                 metadata=[("x-api-key", self.privateApiKey)]
             )
 
-        return self.__retryNonIllegalArg(doit)
+        return self.__retryNonIllegalArg(doit, "verifyChallenge")
 
     # def reportDevice(self, userId, deviceId):
     #     return self.shepherd.reportDevice(
@@ -105,7 +112,7 @@ class Userwatch:
                 metadata=[("x-api-key", self.privateApiKey)]
             )
 
-        return self.__retryNonIllegalArg(doit)
+        return self.__retryNonIllegalArg(doit, "getDeviceList")
 
     # Run the function, retrying once on errors other than illegal argument.
     # Illegal argument errors, will never work a second time.
@@ -116,12 +123,54 @@ class Userwatch:
     # nuanced logic. https://pypi.org/project/retry/
     # We should be cautious about what retry behaviour we apply globally.
 
-    def __retryNonIllegalArg(self, fn):
+    def __retryNonIllegalArg(self, fn, what: str):
         try:
             return fn()
         except grpc.RpcError as err:
+            self.__logError(what + " failed", err)
             if err and err.code() == grpc.StatusCode.INVALID_ARGUMENT:
                 raise err
             else:
-                # Ideally we should report the error in the background using historian.
                 return fn()
+
+    def __logError(self, msg, err):
+        self.__log(msg, userwatch_historian_pb2.LOG_SEVERITY_ERROR, err)
+
+    def __log(self, msg, severity, err):
+        logEntry = userwatch_historian_pb2.LogEntry()
+        logEntry.severity = severity
+
+        message = msg
+        if err != None and isinstance(err, Exception):
+            message += " -- " + str(err)
+            trace = traceback.TracebackException.from_exception(err)
+            if len(trace.stack) > 0:
+                filename = trace.stack[0].filename
+                line = trace.stack[0].lineno
+                function = trace.stack[0].name
+                logEntry.source_location.file = filename
+                logEntry.source_location.line = line
+                logEntry.source_location.function = function
+        if severity == userwatch_historian_pb2.LOG_SEVERITY_ERROR:
+            message += "\n" + traceback.format_exc()
+
+        logEntry.text_payload = json.dumps({
+            "eventTime": datetime.utcnow().isoformat(timespec="milliseconds") + "Z",
+            "serviceContext": {
+                "service":  "pythonLibrary"
+            },
+            "message": message,
+            "reportLocation": {
+                "filePath": logEntry.source_location.file,
+                "lineNumber": logEntry.source_location.line,
+                "functionName": logEntry.source_location.function,
+            },
+        })
+        logEntry.source_name =  "pythonLibrary"
+        
+        future = self.historian.ReportLogEntry.future(
+            logEntry,
+            metadata=[("x-api-key", self.privateApiKey)])
+        # This callback on the future would seem to do nothing but having it seems to make all the
+        # difference on if the api call is reliably made.
+        future.add_done_callback(lambda f: None)

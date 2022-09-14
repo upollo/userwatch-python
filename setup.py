@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="userwatch-python",
-    version="0.0.5",
+    version="0.0.6",
     author="Userwatch",
     description="",
     long_description=long_description,

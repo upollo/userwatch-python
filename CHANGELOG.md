@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Removed
 
+## [0.0.6] 2022-09-14
+
+### Added
+
+- Additional logging on errors
+
 ## [0.0.5] 2022-09-02
 
 ### Changed

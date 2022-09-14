@@ -4,4 +4,3 @@ __pycache__
 .eggs
 *.egg-info
 venv
-.DS_Store
